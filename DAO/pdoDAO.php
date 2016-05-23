@@ -24,17 +24,24 @@ class pdoDAO implements IDAO {
 
           //  $conn = new PDO('mysql:host=localhost;port=3306; '
           //          . 'dbname=loja' . 'root', '');
+            
+          $row = array();
+          
 $conn = new PDO('mysql:host=' . self::MYSQL_HOST . ';dbname=' . self::MYSQL_DB_NAME, self::MYSQL_USER, self::MYSQL_PASSWORD);
             
             $result = $conn->query("SELECT id_cliente, nome FROM clientes");
 
             if ($result) {
-                while ($row = $result->fetch(PDO::FETCH_OBJ)) {
-                    echo $row->id_cliente . " - " . $row->nome . "<br/>";
+                while ($row[] = $result->fetch(PDO::FETCH_OBJ)) {
+                 //  echo $row->id_cliente . " - " . $row->nome . "<br/>";
                 }
             }
             
+            return $row;
+            
         } catch (PDOException $exc) {
+            echo "Erro ao listar: " . $exc->getMessage();
+        } catch (Exception $exc) {
             echo "Erro ao listar: " . $exc->getMessage();
         } finally {
             $conn = null;
